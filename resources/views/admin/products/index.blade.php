@@ -15,6 +15,7 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Categories</th>
+                <th>Price</th>
                 <th>Actions</th>
             </tr>
         </thead> 
@@ -39,6 +40,9 @@
                         @foreach ($product->categories as $category)
                             <span class="badge bg-info">{{ $category->name }}</span>
                         @endforeach
+                    </td>
+                    <td>
+                        {{$product->price}}
                     </td>
                     <td>
                         <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-primary">Edit</a>

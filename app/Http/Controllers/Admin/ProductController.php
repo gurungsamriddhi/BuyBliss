@@ -30,24 +30,16 @@ class ProductController extends Controller
         //dd($request->all());
 
         $request->validate([
-            'name' =>[ 
+            'name' => [
                 'required',
                 'unique:products,name',
                 'regex:/^[A-Za-z0-9\s]+$/',
                 'max:100',
-], 
-           'description' => 'nullable|string|max:500',
-            'price' => 'nullable|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'categories' => 'nullable|array',
-],
-[ 
-    'name.required'=>'Name field cannot be empty.',
-    'name.unique'=>'This Product name already exists.',
-    'name.regex'=>'Name can only contain letters, numbers and spaces.'
-
-
-           
+            ],
+            'description' => 'nullable|string|max:500',
+            'price' => 'required|numeric|min:0',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'categories' => 'required|array',
         ]);
 
         // if($validator->fails()){
@@ -57,6 +49,7 @@ class ProductController extends Controller
         $data = $request->only(['name', 'description', 'price']);
 
         // Handle image upload
+        //public<products
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }
@@ -83,7 +76,7 @@ class ProductController extends Controller
             'name' => 'required|unique:products,name,' . $product->id,
             'description' => 'nullable|string|max:500',
             'price' => 'nullable|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'categories' => 'nullable|array',
         ]);
 

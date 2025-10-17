@@ -4,25 +4,34 @@
 
     <!-- Product Name -->
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="name" name="name"
+        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
                placeholder="Product Name"
                value="{{ old('name', $product->name ?? '') }}" required>
         <label for="name" class="fw-normal text-secondary">Product Name</label>
+        @error('name')
+        <span class="text-damger small">{{$message}}</span>
+        @enderror
     </div>
 
     <!-- Description -->
     <div class="form-floating mb-3">
-        <textarea class="form-control" id="description" name="description"
+        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
                   placeholder="Description" style="height: 100px">{{ old('description', $product->description ?? '') }}</textarea>
         <label for="description" class="fw-normal text-secondary">Description</label>
+        @error ('description')
+<span class="text-danger small">{{$message}}</span>
+@enderror
     </div>
 
     <!-- Price -->
     <div class="form-floating mb-3">
-        <input type="number" step="0.01" class="form-control" id="price" name="price"
+        <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price"
                placeholder="Price"
                value="{{ old('price', $product->price ?? '') }}">
         <label for="price" class="fw-normal text-secondary">Price</label>
+        @error('price')
+        <span class="text-danger small">{{$message}}</span>
+        @enderror
     </div>
 
     <!-- Categories -->
@@ -41,6 +50,9 @@
                 </label>
             </div>
         @endforeach
+        @error('categories')
+        <span class="text-danger small">{{$message}}</span>
+        @enderror
     </div>
 
    <div class="mb-3">
@@ -57,7 +69,10 @@
         </div>
     @endif
 
-    <input class="form-control" type="file" id="formFile" name="image" accept="image/*">
+    <input class="form-control @error('image') is-invalid @enderror" type="file" id="formFile" name="image" accept="image/*">
+    @error('image')
+    <span class="text-danger small">{{$message}}</span>
+    @enderror
 </div>
 
     <button type="submit" class="btn btn-{{ $method === 'POST' ? 'success' : 'primary' }}">
