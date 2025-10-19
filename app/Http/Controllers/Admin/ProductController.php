@@ -36,7 +36,7 @@ class ProductController extends Controller
                 'regex:/^[A-Za-z0-9\s]+$/',
                 'max:100',
             ],
-            'description' => 'nullable|string|max:500',
+            'description' => 'nullable|string|max:1000',
             'price' => 'required|numeric|min:0',
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'categories' => 'required|array',

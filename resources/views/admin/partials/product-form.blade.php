@@ -38,18 +38,23 @@
     <div class="mb-3">
         <label class="label-dark">Select Categories</label>
         @foreach($categories as $category)
-            <div class="form-check">
-                <input type="checkbox"
-                       class="form-check-input"
-                       id="category_{{ $category->id }}"
-                       name="categories[]"
-                       value="{{ $category->id }}"
-                       {{ (isset($product) && $product->categories->contains($category->id)) ? 'checked' : '' }}>
-                <label for="category_{{ $category->id }}" class="form-check-label text-secondary">
-                    {{ $category->name }}
-                </label>
-            </div>
-        @endforeach
+    <div class="form-check">
+        <input type="checkbox"
+               class="form-check-input"
+               id="category_{{ $category->id }}"
+               name="categories[]"
+               value="{{ $category->id }}"
+               @if( (collect(old('categories'))->contains($category->id)) || 
+                     (isset($product) && $product->categories->contains($category->id) && !old('categories')) )
+                   checked 
+               @endif
+        >
+        <label for="category_{{ $category->id }}" class="form-check-label text-secondary">
+            {{ $category->name }}
+        </label>
+    </div>
+@endforeach
+
         @error('categories')
         <span class="text-danger small">{{$message}}</span>
         @enderror

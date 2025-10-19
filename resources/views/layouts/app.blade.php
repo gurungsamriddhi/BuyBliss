@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuyBliss</title>
-<!-- <script src="https://cdn.tailwindcss.com"></script>-->
+<script src="https://cdn.tailwindcss.com"></script>
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
 </head>
 <body>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="py-6">
                   <a href="{{route('login')}}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
-                  <a href="{{route('register')}}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                  <a href="{{route('register')}}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Register</a>
                 </div>
               </div>
             </div>
@@ -80,8 +80,69 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="bg-gray-100 text-center p-4 text-sm text-gray-600">
-        © {{ date('Y') }} BuyBliss. All rights reserved.
-    </footer>
+   <!-- component -->
+<footer class="relative w-full bg-white">
+  <div class="mx-auto w-full max-w-7xl px-4">
+    
+    <!-- Footer Navigation Links -->
+    <div class="mx-auto grid w-full grid-cols-1 gap-8 py-12 justify-items-center md:grid-cols-2 lg:grid-cols-4">
+      <!-- Column: Company -->
+      <ul >
+        <p class="font-sans text-base font-semibold opacity-50 mb-2">Company</p>
+        <li><a href="{{route('about')}}" class="text-base py-1 hover:text-primary">About us</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Careers</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Press</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">News</a></li>
+      </ul>
+
+      <!-- Column: Help Center -->
+      <ul>
+        <p class="font-sans text-base font-semibold opacity-50 mb-2">Help Center</p>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Discord</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Twitter</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">GitHub</a></li>
+        <li><a href="{{route('contact')}}" class="text-base py-1 hover:text-primary">Contact Us</a></li>
+      </ul>
+
+      <!-- Column: Resources -->
+      <ul>
+        <p class="font-sans text-base font-semibold opacity-50 mb-2">Resources</p>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Blog</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Newsletter</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Free Products</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Affiliate Program</a></li>
+      </ul>
+
+      <!-- Column: Products -->
+      <ul>
+        <p class="font-sans text-base font-semibold opacity-50 mb-2">Products</p>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Templates</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">UI Kits</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Icons</a></li>
+        <li><a href="#" class="text-base py-1 hover:text-primary">Mockups</a></li>
+      </ul>
+    </div>
+
+    <!-- Footer Bottom Section -->
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 border-t border-stone-200 py-4">
+      <small class="font-sans text-sm text-center">
+        © 2025 <a href="#" class="hover:underline">BuyBliss</a>. All Rights Reserved.
+      </small>
+
+      <!-- Social Media Links -->
+      <!--later app store logo to encourage users to download the mobile app instead
+      <div class="flex gap-2 mt-2 justify-center">
+        <a href="#" class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-transparent text-stone-800 hover:bg-stone-200/10 transition">
+          Example Facebook Icon
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M17 2H14C12.6739 2 11.4021 2.52678 10.4645 3.46447C9.52678 4.40215 9 5.67392 9 7V10H6V14H9V22H13V14H16L17 10H13V7C13 6.73478 13.1054 6.48043 13.2929 6.29289C13.4804 6.10536 13.7348 6 14 6H17V2Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        Add more icons as needed
+      </div>-->
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
