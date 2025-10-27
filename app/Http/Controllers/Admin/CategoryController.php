@@ -1,11 +1,15 @@
 <?php
-
+//this controller belongs to the Admin sub namespace 
 namespace App\Http\Controllers\Admin;
-
+//base controller class from Laravel Framework
 use App\Http\Controllers\Controller;
+//http request handling class
 use Illuminate\Http\Request;
+//category eloquent model
 use App\Models\Category;
 
+
+//categorycontroller inherits from Laravel's base controller
 class CategoryController extends Controller
 {
     public function index()
@@ -19,6 +23,7 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
+    //Handle form submission to create a new category
     public function store(Request $request)
     {
         $request->validate(
@@ -45,7 +50,7 @@ class CategoryController extends Controller
         Category::create($request->all());
         return redirect()->route('admin.categories.index')->with('success', 'Category added.');
     }
-
+    //show edit form for specific category
     public function edit(Category $category)
     {
         return view('admin.categories.edit', compact('category'));

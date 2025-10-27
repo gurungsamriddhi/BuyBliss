@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CategoryApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('v1')->group(function () {
+    Route::get('/categories', [CategoryApiController::class, 'index']);
+    Route::post('/categories', [CategoryApiController::class, 'store']);
+    Route::get('/categories/{id}', [CategoryApiController::class, 'show']);
+    Route::put('/categories/{id}', [CategoryApiController::class, 'update']);
+    Route::delete('/categories/{id}', [CategoryApiController::class, 'destroy']);
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
