@@ -1,13 +1,15 @@
 <?php
+
 namespace App\Repositories\Interfaces;
 
 
 
-// interface that has method declaratio->abstract methods
-//must be implemented by the class that inherits this interface
-interface CategoryRepositoryInterface{
+interface ProductRepositoryInterface
+{
     public function all();
     public function find($id);
+    public function listallcategories();
+    public function findwithCategories($id);
     public function create(array $data);
     public function update($id, array $data);
     public function destroy($id);

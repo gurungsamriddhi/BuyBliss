@@ -29,13 +29,13 @@ public function store(LoginRequest $request): RedirectResponse
 
         $request->session()->regenerate();
 
-        $user =Auth::user();
+        $user =$request->user();
 
         if($user->role==='admin'){
             return redirect()->route('admin.dashboard.home');
         } 
 
-        return redirect()->route('home');
+        return redirect()->intended(route('home'));
     }
 
     /**

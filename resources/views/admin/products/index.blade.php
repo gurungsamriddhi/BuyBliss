@@ -3,10 +3,7 @@
 @section('title', 'Products')
 
 @section('admin_content')
-    <h1>Products</h1>
-
-
-
+    <h1 class="form_header">Products</h1>
     <a href="{{ route('admin.products.create') }}" class="btn btn-success mb-2">Add Product</a>
 
     <table class="table table-bordered table-hover">

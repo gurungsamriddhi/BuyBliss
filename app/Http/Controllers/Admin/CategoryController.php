@@ -7,14 +7,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 //category eloquent model
 use App\Models\Category;
+use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
 
 //categorycontroller inherits from Laravel's base controller
 class CategoryController extends Controller
 {
+
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository){
+        $this->categoryRepository=$categoryRepository;
+
+    }
+
     public function index()
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = $this->categoryRepository->all();
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -47,23 +55,24 @@ class CategoryController extends Controller
                 'description.max' => 'Description cannot be longer than 500 characters.',
             ]
         );
-        Category::create($request->all());
+        $this->categoryRepository->create($request->all());
         return redirect()->route('admin.categories.index')->with('success', 'Category added.');
     }
     //show edit form for specific category
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category=$this->categoryRepository->find($id);
         return view('admin.categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         $request->validate(
             [
                 'name' => [
                     'required',
                     'regex: /^[A-Za-z\s]+$/',
-                    'unique:categories,name,' . $category->id,
+                    'unique:categories,name,' . $id,
                     'max:50',
                 ],
 
@@ -77,13 +86,13 @@ class CategoryController extends Controller
                 'description.max' => 'Description cannot be longer than 500 characters.',
             ]
         );
-        $category->update($request->all());
+        $this->categoryRepository->update($id, $request->all());
         return redirect()->route('admin.categories.index')->with('success', 'Category updated.');
     }
 
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $category->delete();
+        $this->categoryRepository->destroy($id);
         return redirect()->route('admin.categories.index')->with('success', 'Category deleted.');
     }
 }

@@ -21,10 +21,13 @@ use App\Http\Controllers\CartController;
 //Public routes accessible to guest too
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about',[HomeController::class, 'about'])->name('about');
-Route::get('/contact',[ContactController::class, 'index'])->name('contact');
+Route::get('/blog',[HomeController::class,'blog'])->name('blog');
+Route::get('/services', [HomeController::class, 'services'])->name('services');
+Route::get('/contactus',[ContactController::class, 'index'])->name('contactus');
+
 Route::get('/become-seller', [SellerController::class, 'index'])->name('become-seller');
-Route::get('/browse',[PublicProductController::class, 'index'])->name('browse');
-Route::get('/product/{id}', [PublicProductController::class ,'show'])->name('product.show');
+Route::get('/shop',[PublicProductController::class, 'index'])->name('shop');
+Route::get('/product/{id}', [PublicProductController::class ,'show'])->name('showproduct');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,6 +37,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard/home', [AdminController::class, 'index'])->name('dashboard.home');
 
     // Add more admin routes
+
+    //resource creates 7 routes 
+    //do not need to write the crud routes manually
     Route::resource('products', AdminProductController::class);
     Route::resource('categories', CategoryController::class);
 });
@@ -44,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/cart/items',[CartController::class,'index'])->name('cartitems');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add'); // Add this line
 Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
 Route::get('/cart', [CartController::class, 'show'])->name('cart');

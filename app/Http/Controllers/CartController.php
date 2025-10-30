@@ -6,7 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
+
+
 {
+
+    public function index(){
+        
+        return view('public.cart.index');
+
+    }
     public function addToCart(Request $request)
     {
         if (!Auth::check()) {
@@ -19,12 +27,20 @@ class CartController extends Controller
         }
 
         $cart = session()->get('cart', []);
-        $cart[$productId] = ($cart[$productId] ?? ['quantity' => 0]) + ['quantity' => 1];
+        if(!isset($cart[$productId])){
+            $cart[$productId]=['quantity'=>1];
+
+        }
+        else{
+            $cart[$productId]['quantity']++;
+        }
         session()->put('cart', $cart);
 
         return response()->json(['success' => 'Product added to cart!']);
     }
 
+
+    //returns the number of unique products in the cart
     public function count()
     {
         $cart = session()->get('cart', []);

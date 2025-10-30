@@ -124,16 +124,5 @@
             }
         });
 
-        // Optional: Update cart count
-        async function updateCartCount() {
-            try {
-                const response = await fetch('{{ route('cart.count') }}');
-                const data = await response.json();
-                const cartCount = document.getElementById('cart-count');
-                if (cartCount) cartCount.textContent = data.count;
-            } catch (error) {
-                console.error('Error updating cart count:', error);
-            }
-        }
     </script>
 @endsection

@@ -6,21 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+protected $productRepository;
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository=$productRepository;
+    }
     // Display all products
     public function index()
     {
-        $products = Product::with('categories')->get();
+        $products = $this->productRepository->all();
         return view('admin.products.index', compact('products'));
     }
 
     // Show create form
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->productRepository->listallcategories();
         return view('admin.products.create', compact('categories'));
     }
 
@@ -54,7 +60,7 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
-        $product = Product::create($data);
+        $product =$this->productRepository->create($data);
 
         // Attach categories
         $product->categories()->sync($request->categories ?? []);
@@ -63,17 +69,18 @@ class ProductController extends Controller
     }
 
     // Show edit form
-    public function edit(Product $product)
+    public function edit($id)
     {
-        $categories = Category::all();
+        $product=$this-> productRepository->find($id);
+        $categories = $this->productRepository->listallcategories();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
     // Update existing product
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:products,name,' . $product->id,
+            'name' => 'required|unique:products,name,' . $id,
             'description' => 'nullable|string|max:500',
             'price' => 'nullable|numeric|min:0',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -86,19 +93,21 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }
-
-        $product->update($data);
+        // Update product
+        $updatedProduct = $this->productRepository->update($id, $data);
 
         // Sync categories
-        $product->categories()->sync($request->categories ?? []);
+        $updatedProduct->categories()->sync($request->categories ?? []);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
-    // Delete product
-    public function destroy(Product $product)
+    /**
+     * Delete product
+     */
+    public function destroy($id)
     {
-        $product->delete();
+        $this->productRepository->destroy($id);
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
