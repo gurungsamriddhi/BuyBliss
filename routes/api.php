@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CategoryApiController;
+use App\Http\Controllers\Api\ProductApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,25 @@ use App\Http\Controllers\Api\CategoryApiController;
 |
 */
 
+
 Route::prefix('v1')->group(function () {
-    Route::get('/categories', [CategoryApiController::class, 'index']);
-    Route::post('/categories', [CategoryApiController::class, 'store']);
-    Route::get('/categories/{id}', [CategoryApiController::class, 'show']);
-    Route::put('/categories/{id}', [CategoryApiController::class, 'update']);
-    Route::delete('/categories/{id}', [CategoryApiController::class, 'destroy']);
-});
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+    // Public: Only read
+    Route::get('categories', [CategoryApiController::class, 'index']);
+    Route::get('categories/{id}', [CategoryApiController::class, 'show']);
+    Route::get('products', [ProductApiController::class, 'index']);
+    Route::get('products/{id}', [ProductApiController::class, 'show']);
+
+    // Protected: Write operations
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('categories', [CategoryApiController::class, 'store']);
+        Route::put('categories/{id}', [CategoryApiController::class, 'update']);
+        Route::delete('categories/{id}', [CategoryApiController::class, 'destroy']);
+
+        Route::post('products', [ProductApiController::class, 'store']);
+        Route::put('products/{id}', [ProductApiController::class, 'update']);
+        Route::delete('products/{id}', [ProductApiController::class, 'destroy']);
+
+        Route::get('/user', fn(Request $request) => $request->user());
+    });
 });
